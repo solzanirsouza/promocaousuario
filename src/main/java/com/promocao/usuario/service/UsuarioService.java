@@ -1,6 +1,6 @@
 package com.promocao.usuario.service;
 
-import com.promocao.usuario.model.dto.Usuario;
+import com.promocao.usuario.model.Usuario;
 import com.promocao.usuario.model.dto.UsuarioResponseDTO;
 import org.springframework.stereotype.Service;
 
