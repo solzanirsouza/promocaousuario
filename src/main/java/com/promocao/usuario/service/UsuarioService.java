@@ -6,13 +6,18 @@ import com.promocao.usuario.model.entity.UsuarioEntity;
 import com.promocao.usuario.model.entity.UsuarioPontosEntity;
 import com.promocao.usuario.repository.UsuarioPontoRepository;
 import com.promocao.usuario.repository.UsuarioRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static java.lang.String.format;
+
 @Service
 public class UsuarioService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UsuarioRepository repository;
@@ -20,6 +25,7 @@ public class UsuarioService {
     private UsuarioPontoRepository pontoRepository;
 
     public Long salvar(Usuario usuario) {
+        logger.info(format("Salvando usuario %s", usuario.getNome()));
         UsuarioEntity entity = repository.save(new UsuarioEntity()
                 .setNome(usuario.getNome())
                 .setEmail(usuario.getEmail()));
@@ -27,8 +33,9 @@ public class UsuarioService {
         return entity.getId();
     }
 
-    public UsuarioResponseDTO obterPorId(Long idUsuario) {
-        Optional<UsuarioEntity> entity = repository.findById(idUsuario);
+    public UsuarioResponseDTO obterPorId(Long usuarioId) {
+        logger.info(format("Obtendo usuario com id %d", usuarioId));
+        Optional<UsuarioEntity> entity = repository.findById(usuarioId);
         return entity
                 .map(this::obterUsuarioResponse)
                 .orElse(null);
