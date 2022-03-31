@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  db:
+    container_name: promocaousuario-api
+    image: <APP IMAGE>:<APP VERSION>
+    ports:
+      - '8083:8083'

@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 import static java.lang.String.format;
+import static java.util.Objects.isNull;
 
 @RestController
-@RequestMapping("/api/public/v1/usuario")
+@RequestMapping("/api/publico/v1/usuario")
 public class UsuarioController {
 
     @Autowired
@@ -29,7 +30,13 @@ public class UsuarioController {
     @GetMapping("/{idUsuario}")
     public ResponseEntity<UsuarioResponseDTO> obterPorId(@PathVariable("idUsuario") Long idUsuario) {
         UsuarioResponseDTO response = service.obterPorId(idUsuario);
-        return ResponseEntity.ok(response);
+
+        if (isNull(response)) {
+            return ResponseEntity.noContent().build();
+
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 
     private UsuarioResponseDTO obterUsuarioResponse(UsuarioRequestDTO usuario, Long idUsuario) {
